@@ -6,23 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".FirstFragment">
 
-    <TextView
-        android:id="@+id/textview_first"
+    <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_first_fragment"
-        app:layout_constraintBottom_toTopOf="@id/button_first"
+        android:id="@+id/progress_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button_first"
-        android:layout_width="wrap_content"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_to_refresh"
         android:layout_height="wrap_content"
-        android:text="@string/next"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_first" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.bisapp.customrecyclerview.CustomRecyclerView
+            android:id="@+id/category_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:CustomRecyclerViewInnerContentLayout="@layout/category_items"
+            tools:listitem="@layout/category_items" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
