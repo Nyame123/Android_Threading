@@ -3,6 +3,7 @@ package com.bisapp.threadingexamples.utils;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
+import android.text.format.Formatter;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -32,7 +33,7 @@ public class FetchDocumentsOnStorage {
                     String path = cursor.getString(cursor.getColumnIndex(MediaStore.Files.FileColumns.DATA));
                     File file = new File(path);
                     if (!file.isDirectory()) {
-                        FileData fileData = new FileData(file.getName(), "" + file.length());
+                        FileData fileData = new FileData(file, Formatter.formatFileSize(context,file.length()));
                         fileDataList.add(fileData);
                     }
                     cursor.moveToNext();

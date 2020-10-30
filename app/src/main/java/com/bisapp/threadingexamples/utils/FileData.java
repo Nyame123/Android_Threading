@@ -1,19 +1,21 @@
 package com.bisapp.threadingexamples.utils;
 
+import java.io.File;
+
 public class FileData {
-    private String name;
+    private File name;
     private String size;
 
-    public FileData(String name, String size) {
+    public FileData(File name, String size) {
         this.name = name;
         this.size = size;
     }
 
-    public String getName() {
+    public File getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(File name) {
         this.name = name;
     }
 

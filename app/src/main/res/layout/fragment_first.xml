@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstFragment">
+    tools:context=".asynctask.AsyncTaskFragment">
 
     <ProgressBar
         android:layout_width="wrap_content"
@@ -28,8 +28,8 @@
             android:id="@+id/category_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:CustomRecyclerViewInnerContentLayout="@layout/category_items"
-            tools:listitem="@layout/category_items" />
+            app:CustomRecyclerViewInnerContentLayout="@layout/rowlayout"
+            tools:listitem="@layout/rowlayout" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 

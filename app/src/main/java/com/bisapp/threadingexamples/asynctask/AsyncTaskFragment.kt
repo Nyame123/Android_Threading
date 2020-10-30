@@ -1,5 +1,6 @@
-package com.bisapp.threadingexamples
+package com.bisapp.threadingexamples.asynctask
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -10,23 +11,31 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bisapp.customrecyclerview.CustomRecyclerView
-import com.bisapp.threadingexamples.asynctask.DocsRetrieveAsyncTask
-import com.bisapp.threadingexamples.asynctask.DocsRetrieveCallbacks
+import com.bisapp.threadingexamples.R
 import com.bisapp.threadingexamples.utils.FetchDocumentsOnStorage
 import com.bisapp.threadingexamples.utils.FileData
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.fragment_first.*
 import java.lang.ref.WeakReference
 import java.util.concurrent.Executors
 
+
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class FirstFragment : Fragment(), CustomRecyclerView.BindViewsListener,
+class AsyncTaskFragment : Fragment(), CustomRecyclerView.BindViewsListener,
     DocsRetrieveCallbacks,
     SwipeRefreshLayout.OnRefreshListener {
 
     lateinit var fetchDocs: FetchDocumentsOnStorage
     lateinit var docRetrieveAsynctask: DocsRetrieveAsyncTask
+    lateinit var request: RequestBuilder<Drawable>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,7 +51,9 @@ class FirstFragment : Fragment(), CustomRecyclerView.BindViewsListener,
         asyncTaskCall(false)
         swipe_to_refresh.setOnRefreshListener(this)
 
-        category_recyclerview.setBindViewsListener(this)
+        category_recyclerview.setDivider(true)
+            .setBindViewsListener(this)
+        request = Glide.with(this).asDrawable().fitCenter()
     }
 
     private fun asyncTaskCall(parallelExecution: Boolean) {
@@ -57,8 +68,14 @@ class FirstFragment : Fragment(), CustomRecyclerView.BindViewsListener,
     override fun bindViews(view: View?, objects: MutableList<*>?, position: Int) {
 
         val fileData = objects?.get(position) as FileData
-        val path = view?.findViewById<TextView>(R.id.music)
-        path?.text = fileData.name
+        val path = view?.findViewById<TextView>(R.id.title)
+        val size = view?.findViewById<TextView>(R.id.size)
+        val icon = view?.findViewById<CircleImageView>(R.id.apk_icon)
+        path?.text = fileData.name.name
+        size?.text = fileData.size
+        request.load(fileData.name)
+            .into(icon!!)
+
     }
 
     override fun onDone() {
